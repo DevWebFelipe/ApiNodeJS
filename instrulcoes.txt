@@ -11,3 +11,6 @@ Para instalar o types node
 -> npm i @types/node -D
 IPORTANTE: Pode instalar os dois juntos com 
 -> npm i typescript @types/node -D
+
+Para instalar o pino
+-> npm i pino-pretty

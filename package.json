@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^5.5.0"
+    "fastify": "^5.5.0",
+    "pino-pretty": "^13.1.1"
   },
   "devDependencies": {
     "@types/node": "^24.2.1",
