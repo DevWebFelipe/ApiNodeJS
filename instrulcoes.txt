@@ -1,0 +1,5 @@
+Para iniciar o projeto com node
+-> npm init -y
+
+Para instalar o fastify (porque fastify ao invés de express? mais rápido e mais bem mantido)
+-> npm i fastify
