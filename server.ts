@@ -1,5 +1,6 @@
-const fastify = require('fastify')
-const crypto  = require('crypto')
+import fastify from "fastify"
+import crypto from 'node:crypto'
+
 
 const server = fastify()
 
@@ -13,9 +14,13 @@ server.get('/courses', () => {
   return { courses }
 })
 
-server.get('/courses/:id', (request, reply) => {
-  // const { id } = request.params
-  const courseId = request.params.id // Da para fazer dos dois jeitos
+server.get('/courses/:id', (request, reply) => { 
+  type Params = {
+    id: string
+  }
+  
+  const params = request.params as Params
+  const courseId = params.id 
 
   const course = courses.find(course => course.id === courseId)
 
@@ -27,8 +32,13 @@ server.get('/courses/:id', (request, reply) => {
 })
 
 server.post('/courses', (request, reply) => {
+  type Body = {
+    title: string
+  }
+
   const courseId = crypto.randomUUID()
-  const courseTitle = request.body.title
+  const body = request.body as Body
+  const courseTitle = body.title
 
   if (!courseTitle) {
     return reply.status(400).send({ message: 'Obrigatório informar um título!' })

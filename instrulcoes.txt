@@ -3,3 +3,11 @@ Para iniciar o projeto com node
 
 Para instalar o fastify (porque fastify ao invés de express? mais rápido e mais bem mantido)
 -> npm i fastify
+
+Para instalar o typescript
+-> npm i typescript
+
+Para instalar o types node
+-> npm i @types/node -D
+IPORTANTE: Pode instalar os dois juntos com 
+-> npm i typescript @types/node -D
