@@ -1,9 +1,0 @@
-services:
-  db:
-    image: postgres:17
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: felipe
-      POSTGRES_DB: desafio
-    ports:
-      - "5432:5432"
