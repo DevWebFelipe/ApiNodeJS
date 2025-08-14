@@ -14,3 +14,18 @@ IPORTANTE: Pode instalar os dois juntos com
 
 Para instalar o pino
 -> npm i pino-pretty
+
+Subir um docker
+-> docker compose up
+
+Deixar o docker rodando direto
+-> docker compose up -d
+
+Ver as imagens do docker que estão rodando
+-> docker ps
+
+Para instalar o drizzle (ORM)
+-> npm i drizzle-kit -D
+
+Para instalar o drizzle (ORM - Versão para produção) + drive do postgres
+-> npm i drizzle-orm pg
