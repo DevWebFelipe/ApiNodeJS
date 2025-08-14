@@ -1,64 +1,69 @@
 import fastify from "fastify"
-import crypto from 'node:crypto'
-
+import crypto from "node:crypto"
+import { db } from "./src/database/client.ts"
+import { courses } from "./src/database/schema.ts"
 
 const server = fastify({
   logger: {
     transport: {
-      target: 'pino-pretty',
+      target: "pino-pretty",
       options: {
-        translateTime: 'HH:MM:ss Z',
-        ignore: 'pid,hosname',
+        translateTime: "HH:MM:ss Z",
+        ignore: "pid,hosname",
       },
     },
   },
 })
 
-const courses = [
-  { id: '1', title: 'Curso de Node.js' },
-  { id: '2', title: 'Curso de React' },
-  { id: '3', title: 'Curso de React Native' },
-]
+// const courses = [
+//   { id: "1", title: "Curso de Node.js" },
+//   { id: "2", title: "Curso de React" },
+//   { id: "3", title: "Curso de React Native" },
+// ]
 
-server.get('/courses', () => {
-  return { courses }
+server.get("/courses", async (request, reply) => {
+  const result = await db.select().from(courses)
+
+  return reply.send({ courses: result })
 })
 
-server.get('/courses/:id', (request, reply) => { 
-  type Params = {
-    id: string
-  }
-  
-  const params = request.params as Params
-  const courseId = params.id 
+// server.get("/courses/:id", (request, reply) => {
+//   type Params = {
+//     id: string
+//   }
 
-  const course = courses.find(course => course.id === courseId)
+//   const params = request.params as Params
+//   const courseId = params.id
 
-  if (course) {
-    return { course }
-  }
+//   const course = courses.find((course) => course.id === courseId)
 
-  return reply.status(404).send('Registro não encontrado!')
-})
+//   if (course) {
+//     return { course }
+//   }
 
-server.post('/courses', (request, reply) => {
-  type Body = {
-    title: string
-  }
+//   return reply.status(404).send("Registro não encontrado!")
+// })
 
-  const courseId = crypto.randomUUID()
-  const body = request.body as Body
-  const courseTitle = body.title
+// server.post("/courses", (request, reply) => {
+//   type Body = {
+//     title: string
+//   }
 
-  if (!courseTitle) {
-    return reply.status(400).send({ message: 'Obrigatório informar um título!' })
-  }
+//   const courseId = crypto.randomUUID()
+//   const body = request.body as Body
+//   const courseTitle = body.title
 
-  courses.push({ id: courseId, title: courseTitle })
+//   if (!courseTitle) {
+//     return reply
+//       .status(400)
+//       .send({ message: "Obrigatório informar um título!" })
+//   }
 
-  return reply.status(201).send({ courseId })
-})
+//   courses.push({ id: courseId, title: courseTitle })
+
+//   return reply.status(201).send({ courseId })
+// })
 
 server.listen({ port: 3333 }).then(() => {
-  console.log('HTTP server running!')
+  console.log("HTTP server running!")
 })
