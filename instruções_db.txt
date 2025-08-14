@@ -1,0 +1,9 @@
+Criar uma tabela a partir de um schema
+-> npx drizzle-kit generate
+Vai ser gerado um .sql em ./drizzle
+-> npx drizzle-kit migrate
+Vai rodar o sql gerado e inserir de fato a tabela no banco
+
+Iterface do banco com drizzle-kit
+-> npx drizzle-kit studio
+Copiar URL gerada e abrir no navegador
