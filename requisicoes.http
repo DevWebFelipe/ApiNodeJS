@@ -15,7 +15,7 @@ GET http://localhost:3333/courses/3c22268f-def2-4a18-a870-bd12985aa935
 
 ###
 
-POST http://localhost:3333/courses/1
+PUT http://localhost:3333/courses/1
 Content-Type: application/json
 
 {
