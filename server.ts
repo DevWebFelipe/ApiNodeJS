@@ -44,25 +44,33 @@ server.get("/courses/:id", async (request, reply) => {
   return reply.status(404).send("Registro não encontrado!")
 })
 
-// server.post("/courses", (request, reply) => {
-//   type Body = {
-//     title: string
-//   }
+server.post("/courses", async (request, reply) => {
+  type Body = {
+    title: string
+    description: string
+  }
 
-//   const courseId = crypto.randomUUID()
-//   const body = request.body as Body
-//   const courseTitle = body.title
+  const courseId = crypto.randomUUID()
+  const body = request.body as Body
+  const courseTitle = body.title
+  const courseDescription = body.description
 
-//   if (!courseTitle) {
-//     return reply
-//       .status(400)
-//       .send({ message: "Obrigatório informar um título!" })
-//   }
+  if (!courseTitle) {
+    return reply
+      .status(400)
+      .send({ message: "Obrigatório informar um título!" })
+  }
 
-//   courses.push({ id: courseId, title: courseTitle })
+  const result = await db
+    .insert(courses)
+    .values({
+      title: courseTitle,
+      description: courseDescription,
+    })
+    .returning()
 
-//   return reply.status(201).send({ courseId })
-// })
+  return reply.status(201).send({ courseId: result[0].id })
+})
 
 server.listen({ port: 3333 }).then(() => {
   console.log("HTTP server running!")
