@@ -1,107 +1,118 @@
-# 🚀 API Node.js – Desafio Rocketseat
+# API Node.js com Fastify, Drizzle ORM e Docker
 
-Projeto desenvolvido durante o evento **Desafio: Sua Primeira API com Node.js** da **Rocketseat** (11 a 14 de agosto de 2025), com foco em aprender e aplicar, na prática, os fundamentos do back-end.
+Este projeto é uma API desenvolvida em Node.js utilizando Fastify, Drizzle ORM para manipulação de banco de dados e Docker para facilitar o ambiente de desenvolvimento.
 
-## 📚 Sobre o Projeto
-Esta aplicação é uma **API REST** desenvolvida com **Node.js** e **TypeScript**, conectada a um banco de dados **PostgreSQL** via **Docker**, com testes automatizados, documentação no **Swagger** e pipeline de integração contínua com **GitHub Actions**.
+## Tecnologias Utilizadas
 
-O objetivo é colocar em prática conceitos essenciais para quem está iniciando no desenvolvimento back-end, resultando em uma aplicação funcional, com deploy e pronta para uso profissional.
+- **Node.js**
+- **Fastify**
+- **Drizzle ORM**
+- **Docker & Docker Compose**
+- **TypeScript**
 
----
+## Estrutura do Projeto
 
-## 🧠 Conteúdos abordados no evento
-
-- **Fundamentos de API com Node.js**  
-  Conceitos de API, padrão REST, comunicação via JSON e protocolo HTTP.
-
-- **Construção prática da API**  
-  Criação de endpoints, conexão com PostgreSQL usando Docker, testes e documentação com Swagger.
-
-- **Testes e Mocking**  
-  Garantia de qualidade com testes automatizados e simulação de dados.
-
-- **Deploy e Integração Contínua**  
-  Deploy da aplicação com Docker, pipeline no GitHub Actions e segurança básica.
-
-- **Aplicação completa no ar**  
-  API finalizada, publicada e pronta para integrar no portfólio.
-
----
-
-## 🛠 Tecnologias Utilizadas
-
-- [Node.js](https://nodejs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Fastify](https://fastify.dev/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Docker](https://www.docker.com/)
-- [Swagger](https://swagger.io/)
-- [Jest](https://jestjs.io/)
-- [GitHub Actions](https://github.com/features/actions)
-
----
-
-## 📂 Estrutura do Projeto
 ```
-│   .gitignore
-│   instrucoes.txt          # Instruções do desafio
-│   package.json             # Dependências e scripts
-│   package-lock.json        # Versões exatas das dependências
-│   tsconfig.json            # Configuração do TypeScript
-│   requisicoes.http         # Requisições para testar a API
-│
-├── server.ts                # Ponto de entrada principal
-└── server-aula.ts           # Código usado durante as aulas
+├── docker-compose.yml         # Configuração dos containers Docker
+├── drizzle.config.ts          # Configuração do Drizzle ORM
+├── package.json               # Dependências e scripts do projeto
+├── server.ts                  # Arquivo principal do servidor
+├── src/
+│   ├── database/
+│   │   ├── client.ts          # Conexão com o banco de dados
+│   │   └── schema.ts          # Definição dos esquemas do banco
+│   └── routes/
+│       ├── create-course.ts   # Rota para criar curso
+│       ├── get-courses.ts     # Rota para listar cursos
+│       └── get-courses-by-id.ts # Rota para buscar curso por ID
+└── drizzle/                   # Migrações do banco de dados
 ```
 
----
+## Como rodar o projeto
 
-## ▶️ Como Executar o Projeto
+1. **Clone o repositório:**
+   ```bash
+   git clone <url-do-repositorio>
+   cd ApiNodeJS
+   ```
 
-### 1. Clonar o repositório
-```bash
-git clone https://github.com/DevWebFelipe/ApiNodeJS.git
-cd ApiNodeJS
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+
+3. **Suba os containers com Docker Compose:**
+   ```bash
+   docker compose up -d
+   ```
+
+4. **Execute as migrações do banco de dados:**
+   ```bash
+   # Comando exemplo, ajuste conforme sua configuração do Drizzle
+   npx drizzle-kit migrate:latest
+   ```
+
+5. **Inicie a aplicação:**
+   ```bash
+   npm run dev
+   ```
+
+## Endpoints principais
+
+- `POST /courses` — Cria um novo curso
+- `GET /courses` — Lista todos os cursos
+- `GET /courses/:id` — Busca um curso pelo ID
+
+## Observações
+
+- Certifique-se de que o Docker esteja instalado e rodando em sua máquina.
+- As configurações do banco de dados podem ser ajustadas no arquivo `docker-compose.yml` e nos arquivos de configuração do Drizzle.
+
+## Licença
+
+Este projeto está sob a licença MIT.
+
+
+## Documentação da API
+
+Este projeto utiliza o pacote [`@scalar/fastify-api-reference`](https://github.com/scalar/scalar) para gerar documentação automática e interativa dos endpoints da API.
+
+
+## Fluxo Principal da Aplicação
+
+O diagrama abaixo ilustra o fluxo mais importante da aplicação: criação e consulta de cursos.
+
+```mermaid
+flowchart TD
+   A[Usuário/Cliente] -->|POST /courses| B[API Fastify]
+   B -->|Valida dados| C[Drizzle ORM]
+   C -->|Insere no banco| D[(Banco de Dados)]
+   D -->|Confirmação| B
+   B -->|Resposta de sucesso| A
+
+   A2[Usuário/Cliente] -->|GET /courses| B2[API Fastify]
+   B2 -->|Consulta Drizzle ORM| C2[Drizzle ORM]
+   C2 -->|Busca dados| D2[(Banco de Dados)]
+   D2 -->|Retorna cursos| B2
+   B2 -->|Lista de cursos| A2
 ```
 
-### 2. Instalar dependências
-```bash
-npm install
+### Como acessar a documentação
+
+1. Certifique-se de que o servidor está rodando (`npm run dev`).
+2. Acesse o endereço: `http://localhost:PORT/docs` no navegador (substitua `PORT` pela porta configurada no seu servidor, geralmente 3000).
+
+### Como configurar (caso queira personalizar)
+
+No arquivo principal do servidor (ex: `server.ts`), adicione:
+
+```ts
+import { fastifyAPIReference } from '@scalar/fastify-api-reference';
+
+fastify.register(fastifyAPIReference, {
+   routePrefix: '/docs',
+   // outras opções de configuração
+});
 ```
 
-### 3. Configurar variáveis de ambiente
-Crie um arquivo `.env` na raiz do projeto com suas credenciais e configurações (exemplo abaixo):
-
-```env
-DATABASE_URL=postgresql://usuario:senha@localhost:5432/nome_banco
-PORT=3333
-```
-
-### 4. Subir o banco de dados com Docker
-```bash
-docker compose up -d
-```
-
-### 5. Rodar a aplicação em modo desenvolvimento
-```bash
-npm run dev
-```
-
-### 6. Testar endpoints
-Você pode usar o arquivo `requisicoes.http` no VSCode (com a extensão REST Client) ou ferramentas como **Insomnia** e **Postman**.
-
----
-
-## 📌 Endpoints
-| Método | Rota         | Descrição                                                                 |
-|--------|--------------|---------------------------------------------------------------------------|
-| GET    | /ping        | Testa se a API está online                                                |
-| GET    | /items       | Lista todos os itens                                                      |
-| POST   | /items       | Cria um novo item                                                         |
-| PUT    | /items/:id   | Atualiza um item *(desenvolvido de forma independente como desafio extra)*|
-| DELETE | /items/:id   | Remove um item *(desenvolvido de forma independente como desafio extra)*  |
-
----
-
-## 📜 Licença
-Este projeto foi desenvolvido para fins educacionais durante o evento da Rocketseat e está sob a licença MIT.
+Assim, você terá uma interface interativa para explorar e testar os endpoints da API, facilitando o desenvolvimento e a integração.
