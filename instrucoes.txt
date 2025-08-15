@@ -35,3 +35,9 @@ Para instalar o zod e a integração do zod com fastify
 
 Para instalar o swagger
 -> npm i @fastify/swagger
+
+Para instalar a interface do swagger
+-> npm i @fastify/swagger-ui
+
+Para instalar o scalar afim de melhorara a interface da documentação
+-> npm install @scalar/fastify-api-reference
