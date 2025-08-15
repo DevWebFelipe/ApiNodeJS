@@ -29,3 +29,9 @@ Para instalar o drizzle (ORM)
 
 Para instalar o drizzle (ORM - Versão para produção) + drive do postgres
 -> npm i drizzle-orm pg
+
+Para instalar o zod e a integração do zod com fastify
+-> npm i zod fastify-type-provider-zod
+
+Para instalar o swagger
+-> npm i @fastify/swagger

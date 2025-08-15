@@ -1,7 +1,14 @@
 import { eq } from "drizzle-orm"
 import fastify from "fastify"
+import {
+  validatorCompiler,
+  serializerCompiler,
+  type ZodTypeProvider,
+} from "fastify-type-provider-zod"
 import { db } from "./src/database/client.ts"
 import { courses } from "./src/database/schema.ts"
+import { z } from "zod"
+import { title } from "process"
 
 const server = fastify({
   logger: {
@@ -13,7 +20,10 @@ const server = fastify({
       },
     },
   },
-})
+}).withTypeProvider<ZodTypeProvider>()
+
+server.setValidatorCompiler(validatorCompiler)
+server.setSerializerCompiler(serializerCompiler)
 
 server.get("/courses", async (request, reply) => {
   //const result = await db.select().from(courses) Se vazio, traz todos os campos
@@ -27,49 +37,56 @@ server.get("/courses", async (request, reply) => {
   return reply.send({ courses: result })
 })
 
-server.get("/courses/:id", async (request, reply) => {
-  type Params = {
-    id: string
+server.get(
+  "/courses/:id",
+  {
+    schema: {
+      params: z.object({
+        id: z.uuid(),
+      }),
+    },
+  },
+  async (request, reply) => {
+    const courseId = request.params.id
+
+    const result = await db
+      .select()
+      .from(courses)
+      .where(eq(courses.id, courseId))
+
+    if (result.length > 0) {
+      return { course: result[0] }
+    }
+
+    return reply.status(404).send("Registro não encontrado!")
   }
+)
 
-  const params = request.params as Params
-  const courseId = params.id
+server.post(
+  "/courses",
+  {
+    schema: {
+      body: z.object({
+        title: z.string().min(5, "Título precisa de pelo menos 5 caracteres"),
+        description: z.string(),
+      }),
+    },
+  },
+  async (request, reply) => {
+    const courseTitle = request.body.title
+    const courseDescription = request.body.description
 
-  const result = await db.select().from(courses).where(eq(courses.id, courseId))
+    const result = await db
+      .insert(courses)
+      .values({
+        title: courseTitle,
+        description: courseDescription,
+      })
+      .returning()
 
-  if (result.length > 0) {
-    return { course: result[0] }
+    return reply.status(201).send({ courseId: result[0].id })
   }
-
-  return reply.status(404).send("Registro não encontrado!")
-})
-
-server.post("/courses", async (request, reply) => {
-  type Body = {
-    title: string
-    description: string
-  }
-
-  const body = request.body as Body
-  const courseTitle = body.title
-  const courseDescription = body.description
-
-  if (!courseTitle) {
-    return reply
-      .status(400)
-      .send({ message: "Obrigatório informar um título!" })
-  }
-
-  const result = await db
-    .insert(courses)
-    .values({
-      title: courseTitle,
-      description: courseDescription,
-    })
-    .returning()
-
-  return reply.status(201).send({ courseId: result[0].id })
-})
+)
 
 server.listen({ port: 3333 }).then(() => {
   console.log("HTTP server running!")
