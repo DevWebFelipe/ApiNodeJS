@@ -24,6 +24,9 @@ Deixar o docker rodando direto
 Ver as imagens do docker que estão rodando
 -> docker ps
 
+Parar o docker se deletar as bases
+-> docker compose stop
+
 Para instalar o drizzle (ORM)
 -> npm i drizzle-kit -D
 
