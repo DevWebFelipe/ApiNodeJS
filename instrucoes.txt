@@ -47,3 +47,6 @@ Para instalar o scalar afim de melhorara a interface da documentação
 
 Para instalar faker JS
 -> npm i @faker-js/faker -D
+
+Para instalar o vitest
+-> npm i vitest -D
