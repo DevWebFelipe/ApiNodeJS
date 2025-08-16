@@ -22,6 +22,7 @@ export const getCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
                 id: z.uuid(),
                 title: z.string(),
                 description: z.string().nullable(),
+                createdAt: z.date(),
               }),
             })
             .describe("Retorna o objeto completo encontrado"),

@@ -9,6 +9,7 @@ import { fastifySwagger } from "@fastify/swagger"
 import { createCoursesRoute } from "./routes/create-course.ts"
 import { getCoursesRoute } from "./routes/get-courses.ts"
 import { getCourseByIdRoute } from "./routes/get-course-by-id.ts"
+import { loginRoute } from "./routes/login.ts"
 import scalarAPIReference from "@scalar/fastify-api-reference"
 
 const server = fastify({
@@ -48,5 +49,6 @@ server.setSerializerCompiler(serializerCompiler)
 server.register(createCoursesRoute)
 server.register(getCoursesRoute)
 server.register(getCourseByIdRoute)
+server.register(loginRoute)
 
 export { server }

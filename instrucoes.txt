@@ -62,3 +62,6 @@ Para instalar o dotenv-cli (ler o .env pelo vitest)
 
 Para instalar o coverage v8
 -> npm i -D @vitest/coverage-v8
+
+Para instalar o argon2 para criptografia
+-> npm i argon2

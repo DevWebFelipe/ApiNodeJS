@@ -16,6 +16,7 @@ test("get course by id", async () => {
       id: expect.any(String),
       title: expect.any(String),
       description: null,
+      createdAt: expect.any(String),
     },
   })
 })
