@@ -36,6 +36,13 @@
       "when": 1755307626432,
       "tag": "0004_lumpy_mentor",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1755309816511,
+      "tag": "0005_bitter_reavers",
+      "breakpoints": true
     }
   ]
 }
