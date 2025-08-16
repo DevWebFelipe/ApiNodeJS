@@ -2,12 +2,12 @@ import { test, expect } from "vitest"
 import request from "supertest"
 import { server } from "../app.ts"
 import { faker } from "@faker-js/faker"
-import { makeUsers } from "../tests/factories/make-user.ts"
+import { makeUser } from "../tests/factories/make-user.ts"
 
 test("realiza um login", async () => {
   await server.ready() // espera o servidor registrar todos os módulos para então executar
 
-  const { user, passwordBeforeHash } = await makeUsers()
+  const { user, passwordBeforeHash } = await makeUser()
 
   const response = await request(server.server)
     .post("/sessions")
@@ -26,7 +26,7 @@ test("realiza um login", async () => {
 test("realiza um login com email inválido", async () => {
   await server.ready() // espera o servidor registrar todos os módulos para então executar
 
-  const { user, passwordBeforeHash } = await makeUsers()
+  const { user, passwordBeforeHash } = await makeUser()
 
   const response = await request(server.server)
     .post("/sessions")
@@ -45,7 +45,7 @@ test("realiza um login com email inválido", async () => {
 test("realiza um login com senha inválida", async () => {
   await server.ready() // espera o servidor registrar todos os módulos para então executar
 
-  const { user, passwordBeforeHash } = await makeUsers()
+  const { user, passwordBeforeHash } = await makeUser()
 
   const response = await request(server.server)
     .post("/sessions")

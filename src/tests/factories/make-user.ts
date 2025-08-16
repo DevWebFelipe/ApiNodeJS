@@ -4,7 +4,7 @@ import { users } from "../../database/schema.ts"
 import { hash } from "argon2"
 import { randomUUID } from "node:crypto"
 
-export async function makeUsers() {
+export async function makeUser() {
   const passwordBeforeHash = randomUUID()
 
   const result = await db
