@@ -44,3 +44,6 @@ Para instalar a interface do swagger
 
 Para instalar o scalar afim de melhorara a interface da documentação
 -> npm install @scalar/fastify-api-reference
+
+Para instalar faker JS
+-> npm i @faker-js/faker -D
