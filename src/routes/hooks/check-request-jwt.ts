@@ -5,11 +5,13 @@ export async function checkRequestJWT(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
-  const token = request.headers.authorization
+  const authHeader = request.headers.authorization
 
-  if (!token) {
+  if (!authHeader) {
     return reply.status(401).send()
   }
+
+  const token = authHeader.replace("Bearer ", "").trim()
 
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET must be set.")
@@ -17,8 +19,8 @@ export async function checkRequestJWT(
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET)
-
     console.log(payload)
+    return
   } catch {
     return reply.status(401).send()
   }

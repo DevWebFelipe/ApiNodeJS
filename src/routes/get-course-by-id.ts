@@ -10,10 +10,11 @@ export const getCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
     "/courses/:id",
     {
       preHandler: [
-        (request, reply) => {
-          checkRequestJWT
+        async (request, reply) => {
+          await checkRequestJWT(request, reply)
         },
       ],
+
       schema: {
         tags: ["courses"],
         summary: "Busca um curso por id",
