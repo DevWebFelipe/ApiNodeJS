@@ -41,7 +41,7 @@ export const getCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
         return { course: result[0] }
       }
 
-      return reply.status(404).send("Registro não encontrado!")
+      return reply.status(404).send()
     }
   )
 }
