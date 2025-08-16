@@ -65,3 +65,7 @@ Para instalar o coverage v8
 
 Para instalar o argon2 para criptografia
 -> npm i argon2
+
+Para instalar o jsonwebtoken
+-> npm i jsonwebtoken
+-> npm i @types/jsonwebtoken -D

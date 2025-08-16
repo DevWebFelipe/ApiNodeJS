@@ -2,7 +2,8 @@ POST http://localhost:3333/courses
 Content-Type: application/json
 
 {
-  "title": "Curso de fasfy"
+  "title": "Curso de fasfy 1",
+  "description": "qualquer coisa"
 }
 
 ###
@@ -11,7 +12,8 @@ GET http://localhost:3333/courses
 
 ###
 
-GET http://localhost:3333/courses/d6fa45d8-c53d-4c47-bc4f-060fd6c6a0a4
+GET http://localhost:3333/courses/96e669ab-0324-4a39-88fe-99b9f099ff77
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyYTRhMWFkMy0xYzk3LTQ3MTAtYjc2Mi0wMDNjMDdkYzg5YjUiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc1NTM2Mzk1MH0.pAOGlw85vwZbj6PKm-mX-G4M4ejvoFAEJNuNg4UBDlM
 
 ###
 
