@@ -50,3 +50,9 @@ Para instalar faker JS
 
 Para instalar o vitest
 -> npm i vitest -D
+
+Para instalar o supertest
+-> npm i supertest -D
+
+Para instalar o supertest para rodar no ts (para tudo que roda no ts mas não foi feito em ts, tem que instalar @types/ + biblioteca)
+-> npm i @types/supertest -D
